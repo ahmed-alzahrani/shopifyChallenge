@@ -14,5 +14,4 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :allItems, !types[Types::ItemType] do
     resolve -> (obj, args, ctx) { Item.all }
   end
-
 end
