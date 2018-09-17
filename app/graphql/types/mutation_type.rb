@@ -7,6 +7,6 @@ Types::MutationType = GraphQL::ObjectType.define do
   field :deleteProduct, function: Resolvers::DeleteProduct.new
 
   #user mutations
-  #field :createUser, function: Resolvers::CreateUser.new
-  #field :createOwner, function: Resolvers::CreateOwner.new
+  field :createUser, function: Resolvers::CreateUser.new
+  field :SignInUser, function: Resolvers::SignInUser.new
 end
