@@ -5,6 +5,16 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# my gems
+gem 'graphql', '1.8.8'
+gem 'search_object', '1.2.0'
+gem 'search_object_graphql', '0.1'
+gem 'devise'
+gem 'devise_token_auth'
+
+#gem graphql-docs  <--- swagger analogous ruby gem for easy documentation
+
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
@@ -18,11 +28,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
-gem 'graphql', '1.8.8'
-gem 'search_object', '1.2.0'
-gem 'search_object_graphql', '0.1'
-
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
