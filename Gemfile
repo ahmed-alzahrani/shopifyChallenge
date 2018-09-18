@@ -10,7 +10,7 @@ gem 'graphql', '1.8.8'
 gem 'search_object', '1.2.0'
 gem 'search_object_graphql', '0.1'
 gem 'devise'
-gem 'devise_token_auth'
+gem 'devise-token_authenticatable'
 
 #gem graphql-docs  <--- swagger analogous ruby gem for easy documentation
 

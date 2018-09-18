@@ -69,9 +69,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise_token_auth (0.2.0)
-      devise (> 3.5.2, < 4.5)
-      rails (< 6)
+    devise-token_authenticatable (1.0.1)
+      devise (>= 4.0.0, < 4.5.0)
     erubi (1.7.1)
     execjs (2.7.0)
     ffi (1.9.25-x86-mingw32)
@@ -194,7 +193,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   devise
-  devise_token_auth
+  devise-token_authenticatable
   graphiql-rails (= 1.4.4)
   graphql (= 1.8.8)
   jbuilder (~> 2.5)
