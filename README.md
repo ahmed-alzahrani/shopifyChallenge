@@ -2,18 +2,11 @@
 
 TODO:
 
-- Add in Store Model
+- Forgot to include create_order.rb mutation in my changed files
 
-- Formalize relationships between all models now that Store exists
+- Finalize all CRUD operations with proper input validation and error handling
 
-- Encorporate CRUD operations on orders and store
-
-- Encorporate `pseudo-token` access, make a user's auth-token a required parameter in any mutation that requires
-authorization. Then use that as a check and include authorization for all queries/mutations
-
-- Include extended functionality of sales for different stores
-
-- Finish all validation / error handling
+- Finish calculation on orders, including sales and coupon code
 
 - replace all camelCase naming with snake_case
 

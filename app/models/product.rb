@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   validates :value, presence: true
   validates :tags, presence: true
   has_many :items, dependent: :destroy
+  belongs_to :store
   after_save :update_items
   before_destroy :destroy_items
 
