@@ -5,6 +5,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.boolean :owner, null: false, default: false
+      t.integer :order_count, null: false, default: 0
+      t.float :total_spent, null: false, default: 0.00
 
       ## auth token
       t.text :authentication_token

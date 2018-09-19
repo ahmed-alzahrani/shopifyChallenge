@@ -1,7 +1,7 @@
 class Resolvers::UpdateStore < GraphQL::Function
 
   # arguments passed into the update function
-  argument :auth_token, !types.String
+  argument :token, !types.String
   argument :name, !types.String
   argument :email, !types.String
   argument :phone, !types.String
@@ -17,8 +17,6 @@ class Resolvers::UpdateStore < GraphQL::Function
     end
     @user = User.find_for_database_authentication(authentication_token: args[:auth_token])
     if (@user && store && (@user.id == store.user_id))
-      # the store and user exists, and their relationship is valid
-    #  store = Store.find_by(id: args[:store_id])
       store.update!(
         name: args[:name],
         email: args[:email],

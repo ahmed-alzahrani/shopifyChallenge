@@ -9,8 +9,6 @@ class Resolvers::SignInUser < GraphQL::Function
     if @user
       if @user.valid_password?(args[:password])
         authentication_token = @user.authentication_token
-        puts "the user authentication token is... "
-        puts authentication_token
         return OpenStruct.new(authentication_token: authentication_token)
       else
         GraphQL::ExecutionError.new('Incorrect Email/Password')

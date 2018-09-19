@@ -7,4 +7,6 @@ Types::UserType = GraphQL::ObjectType.define do
   field :first_name, !types.String
   field :email, !types.String
   field :owner, !types.Boolean
+  field :order_count, !types.Int
+  field :total_spent, !types.Float
 end

@@ -3,14 +3,20 @@ class Resolvers::CreateProduct < GraphQL::Function
   argument :name, !types.String
   argument :value, !types.Float
   argument :tags, !types.String
+  argument :token, !types.String
 
   type Types::ProductType
 
   def call(_obj, args, _ctx)
-    Product.create!(
-      name: args[:name],
-      value: args[:value],
-      tags: args[:tags],
-    )
+    req = User.find_for_database_authentication(authentication_token: args[:token])
+    if req && req.owner
+      Product.create!(
+        name: args[:name],
+        value: args[:value],
+        tags: args[:tags],
+      )
+    else
+      GraphQL::ExecutionError.new("You do not have owner rights to create new products")
+    end
   end
 end
