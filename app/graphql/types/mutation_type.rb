@@ -19,5 +19,6 @@ Types::MutationType = GraphQL::ObjectType.define do
   #store mutations
   #field :createStore, function: Resolvers::CreateStore.new
   field :updateStore, function: Resolvers::UpdateStore.new
+  field :updateOwner, function: Resolvers::UpdateOwner.new
   #field :deleteStore, function: Resolvers::DeleteStore.new
 end

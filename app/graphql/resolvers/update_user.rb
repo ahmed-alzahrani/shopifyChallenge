@@ -1,3 +1,4 @@
+
 class Resolvers::UpdateUser < GraphQL::Function
   #arguments passed
   argument :id, !types.ID
@@ -14,26 +15,25 @@ class Resolvers::UpdateUser < GraphQL::Function
     flag = false
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = User.find_by(id: args[:id])
-    # check to see if we're trying to make the new user an owner
-    if req
-      if (req.owner && args[:owner])
-        flag = true
-      end
-      if target
-        if (req.id == target.id || (req.owner && !target.owner))
-          #the update can occur
-          target.update!(
-            first_name: args[:firstName],
-            last_name: args[:lastName],
-            email: args[:email],
-            owner: flag
-          )
-          target
-        else
-          GraphQL::ExecutionError.new("You do not have the rights to update that user.")
+    if req && target
+      if (req.id == target.id || (req.owner && !target.owner))
+        #the update can occur
+
+        #first check to see if we're turning the user into an owner
+        if req.owner && args[:owner]
+          flag = true
         end
+
+        #update
+        target.update!(
+          first_name: args[:firstName],
+          last_name: args[:lastName],
+          email: args[:email],
+          owner: flag
+        )
+        target
       else
-        GraphQL::ExecutionError.new("The user you want to update does not exist.")
+        GraphQL::ExecutionError.new("You do not have the rights to update that user.")
       end
     else
       GraphQL::ExecutionError.new("The token is invalid. You must be logged in to update a user.1")

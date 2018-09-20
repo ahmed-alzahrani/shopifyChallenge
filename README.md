@@ -2,13 +2,17 @@
 
 TODO:
 
-- Forgot to include create_order.rb mutation in my changed files
-
-- Finalize all CRUD operations with proper input validation and error handling
+- Finalize all CRUD operations with proper input validation and error handling, todo:
+    - CRUD on Orders
+    - Verify updating store/owner
+    - verify updating user
+    - CRUD on Items
 
 - Finish calculation on orders, including sales and coupon code
 
 - replace all camelCase naming with snake_case
+
+- Commenting code / ensure stylistic consistency
 
 - README
 

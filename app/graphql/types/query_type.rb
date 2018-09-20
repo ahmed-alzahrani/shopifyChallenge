@@ -52,4 +52,5 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :allStores, !types[Types::StoreType] do
     resolve -> (obj, args, ctx) { Store.all }
   end
+
 end
