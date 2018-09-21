@@ -4,13 +4,13 @@ class Resolvers::UpdateStore < GraphQL::Function
 
   #mandatory args
   argument :token, !types.String
-  argument :name, !types.String
-  argument :email, !types.String
-  argument :phone, !types.String
-  argument :url, !types.String
   argument :store_id, !types.ID
 
   #optional args
+  argument :name, types.String
+  argument :email, types.String
+  argument :phone, types.String
+  argument :url, types.String
   argument :owner, types.Boolean, default_value: false
   argument :owner_id, types.ID
 
@@ -24,18 +24,34 @@ class Resolvers::UpdateStore < GraphQL::Function
     else
     end
     if (req && store && (req.id == store.user_id))
-      store.update(
-        name: args[:name],
-        email: args[:email],
-        phone: args[:phone],
-        url: args[:url],
-      )
-      if (user && user.owner)
-        store.update(
-          user_id: owner_id
-        )
+      # the update can take place, populate our update object with any and all optional args passed
+      obj = {}
+
+      if args[:name]
+        obj[:name] = args[:name]
       end
-      store
+
+      if args[:email]
+        obj[:email] = args[:email]
+      end
+
+      if args[:phone]
+        obj[:phone] = args[:phone]
+      end
+
+      if args[:url]
+        obj[:url] = args[:url]
+      end
+
+      if (user && user.owner)
+        obj[:user_id] = args[:owner_id]
+      end
+      if obj == {}
+        GraphQL::ExecutionError.new("Improper query. Please specify at least one change you would like to make.")
+      else
+        store.update(obj)
+        return store
+      end
     else
       GraphQL::ExecutionError.new("Improper query. Please ensure the user/store is valid, and that you are the owner of the store")
     end

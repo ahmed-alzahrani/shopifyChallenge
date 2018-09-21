@@ -1,36 +1,47 @@
-
 class Resolvers::UpdateUser < GraphQL::Function
   #arguments passed
+
+  # required parameters
   argument :id, !types.ID
   argument :token, !types.String
 
-  argument :firstName, !types.String
-  argument :lastName, !types.String
-  argument :email, !types.String
+  argument :first_name, types.String
+  argument :last_name, types.String
+  argument :email, types.String
   argument :owner, types.Boolean, default_value: false
 
   type Types::UserType
 
   def call(_obj, args, _ctx)
-    flag = false
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = User.find_by(id: args[:id])
     if req && target
       if (req.id == target.id || (req.owner && !target.owner))
         #the update can occur
 
-        #first check to see if we're turning the user into an owner
+        # build our update object based on which optional params were passed in
+        obj = {}
+
         if req.owner && args[:owner]
-          flag = true
+          obj[:owner] = true
+        else
+          obj[:owner] = false
+        end
+
+        if args[:first_name]
+          obj[:first_name] = args[:first_name]
+        end
+
+        if args[:last_name]
+          obj[:last_name] = args[:last_name]
+        end
+
+        if args[:email]
+          obj[:email] = args[:email]
         end
 
         #update
-        target.update!(
-          first_name: args[:firstName],
-          last_name: args[:lastName],
-          email: args[:email],
-          owner: flag
-        )
+        target.update!(obj)
         target
       else
         GraphQL::ExecutionError.new("You do not have the rights to update that user.")
