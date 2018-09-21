@@ -56,6 +56,8 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  #some kind of filtered order
+
   # PRODUCT QUERIES
 
   # allows owners to search products by any filter
