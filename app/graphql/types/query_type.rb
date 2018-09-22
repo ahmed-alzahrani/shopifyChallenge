@@ -1,9 +1,21 @@
 Types::QueryType = GraphQL::ObjectType.define do
   name 'Query'
 
+  description 'Here contain all of the queries that can be made through this API.
+  These include queries for the current user (getMe), as well as searches for
+  the orders, products, stores, and users that exist in SQLite DB. These latter
+  queries all have optional parameters that allow users to filter their requests.'
+
   # STORE QUERIES
   field :stores do
+
+    description 'A query that returns a sub-set of the exsiting
+    stores based on which optional args are past in.
+    If none are specified, all stores will be returned.'
+
     type !types[Types::StoreType]
+
+
 
     argument :id, types.ID
     argument :name, types.String
@@ -39,6 +51,14 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   # USER QUERIES
   field :users do
+
+    description 'A query that returns a sub-set of the exsiting
+    stores based on which optional args are past in.
+    If none are specified, all stores will be returned.
+
+    Querying the users requires presence of an auth-token as a required argument,
+    and will error if the token does not belong to an owner.'
+
     type !types[Types::UserType]
 
     argument :token, !types.String
@@ -78,6 +98,10 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   # returns ONLY the user who is logged in
   field :getMe, Types::UserType do
+
+    description 'A query that takes in an auth-token and returns the user that token corresponds to.'
+
+
     argument :token, !types.String
     resolve -> (obj, args, ctx) {
       user = User.find_for_database_authentication(authentication_token: args[:token])
@@ -94,6 +118,13 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :orders do
     type !types[Types::OrderType]
+
+    description 'A query that returns a sub-set of the exsiting
+    orders based on which optional args are past in.
+    If none are specified, all orders will be returned.
+
+    Querying the orders requires presence of an auth-token as a required argument,
+    and will error if the token does not belong to an owner.'
 
     argument :token, !types.String
     argument :userId, types.ID
@@ -125,6 +156,10 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :products do
     type !types[Types::ProductType]
+
+    description 'A query that returns a sub-set of the exsiting
+    products based on which optional args are past in.
+    If none are specified, all products will be returned.'
 
     argument :id, types.ID
     argument :storeId, types.ID

@@ -1,4 +1,22 @@
 class Resolvers::UpdateUser < GraphQL::Function
+
+  description" A mutation that updates a user from the SQLite database. Users can update themselves, whilst owners can update themselves and any other non-owner user.
+  If no optional arguments are specified, the user is unchanged and returned in it\'s current state. Owners can also update regular users so that they are now owners.
+
+  ARGUMENTS: \n \n
+  token (required): An authentication token passed in by the requesting user.\n
+  id (required): The unique id of the user being updated.\n
+  first_name (optional): The new first name of the updated store if being changed.\n
+  last_name (optional): The new last name of the updated store if being changed.\n
+  email (optional): The new email of the updated store if being changed.\n
+  owner (optional): A flag that is passed true if we are upgrading a user to an owner.\n \n \n
+
+  ERRORS IF: \n \n
+  - The token and user id are not a match / an owner is trying to update another owner. (You do not have the rights to update that user.) \n
+  - The authentication token passed in does not correspond to any user (You must be logged in to update a user.) \n
+  "
+
+
   #arguments passed
 
   # required parameters
@@ -47,7 +65,7 @@ class Resolvers::UpdateUser < GraphQL::Function
         GraphQL::ExecutionError.new("You do not have the rights to update that user.")
       end
     else
-      GraphQL::ExecutionError.new("The token is invalid. You must be logged in to update a user.1")
+      GraphQL::ExecutionError.new("The token is invalid. You must be logged in to update a user")
     end
   end
 end

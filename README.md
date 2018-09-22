@@ -7,6 +7,8 @@ TODO:
 DOCUMENTATION:
 - Commenting code / ensure stylistic consistency
 
+- ADD ANY ARGUMENTS MISSING OR IMPROPER TYPE TO ERRORS IF
+
 - README
 
 - Documentation (graphql-docs gem)

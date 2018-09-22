@@ -1,7 +1,20 @@
 class Resolvers::DeleteProduct < GraphQL::Function
+
+  description " A mutation that deletes a product from the the SQLite database. \n
+
+  ARGUMENTS: \n \n
+  token (required): An authentication-token representing the user making the request. Only owners can delete orders. \n
+  id (required): The id of the order to be deleted. \n \n \n
+
+  ERRORS IF: \n \n
+  - The product id passed in is invalid. (The product you are attempting to delete does not exist.) \n
+  - The authentication token passed in does not represent an owner. (you do not have permission to delete products). \n
+  "
+
+
   #arguments passed in
-  argument :id, !types.ID
   argument :token, !types.String
+  argument :id, !types.ID
 
   type Types::ProductType
 

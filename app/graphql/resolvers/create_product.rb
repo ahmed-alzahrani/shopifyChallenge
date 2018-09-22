@@ -1,10 +1,25 @@
 class Resolvers::CreateProduct < GraphQL::Function
+
+  description " A mutation that creates a new product in the SQLite database. \n
+
+  ARGUMENTS: \n \n
+  token (reqired): An authentication-token representing the user making the request. Only owners can create products. \n
+  storeId (required): A unique store id representing the store the product is being made for. \n
+  name (required): A string representing the new product\'s name \n
+  value (required): A float representingthe new product\'s base price. \n
+  tags (required): A string representing the various sub-categories that products can be searched by. \n \n \n
+
+  ERRORS IF: \n \n
+  - The token passed in does not belong to an owner. (You do not have owner rights to create new products) \n
+  - The storeId passed in is invalid (You are attempting to create a product for a store that does not exist.) \n
+  "
+
   #arguments passed as #args
+  argument :token, !types.String
+  argument :storeId, !types.ID
   argument :name, !types.String
   argument :value, !types.Float
   argument :tags, !types.String
-  argument :token, !types.String
-  argument :storeId, !types.ID
 
   type Types::ProductType
 

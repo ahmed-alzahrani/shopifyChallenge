@@ -1,6 +1,10 @@
 Types::MutationType = GraphQL::ObjectType.define do
   name 'Mutation'
 
+  description 'Here contain all of the mutations that can be made through this API.
+  These include CRUD operations on products/items/users/orders as well as the ability to update
+  the lone store in the SQLite db.'
+
   # PRODUCT MUTATIONS
   field :createProduct, function: Resolvers::CreateProduct.new
   field :updateProduct, function: Resolvers::UpdateProduct.new

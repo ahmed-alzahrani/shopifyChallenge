@@ -1,4 +1,22 @@
 class Resolvers::UpdateProduct < GraphQL::Function
+
+  description" A mutation that updates a product from the SQLite database. Only owners can update products. If no optional args are passed,
+  the item remains unchanged and is returned in it\'s current state. Updating a product also resets its items, so that there are only three,
+  following the original structure of base (+$0), +1 year service (+$10), and +2 year service (+$20)
+
+  ARGUMENTS: \n \n
+  token (required): An authentication token passed in by the requesting user.\n
+  id (required): The unique id of the product being updated.\n
+  name (optional): The new name of the updated item if being changed.\n
+  value (optional): The new value of the updated item if being changed.\n
+  tags (optional): The new tags of the updated item if being changed. \n \n \n
+
+  ERRORS IF: \n \n
+  - The product id passed in is invalid. (You are attempting to update a product that does not exist.) \n
+  - The authentication token passed in does not correspond to an owner. (You do not have permission to update products). \n
+  "
+
+
   #required args
   argument :token, !types.String
   argument :id, !types.ID
@@ -31,7 +49,7 @@ class Resolvers::UpdateProduct < GraphQL::Function
         end
 
         if obj == {}
-          GraphQL::ExecutionError.new("Improper query. Please specify at least one change you would like to make.")
+          target
         else
           target.update!(
             obj

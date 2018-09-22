@@ -1,5 +1,16 @@
 class Resolvers::DeleteItem < GraphQL::Function
 
+  description " A mutation that deletes an item from the the SQLite database. \n
+
+  ARGUMENTS: \n \n
+  token (required): An authentication-token representing the user making the request. Only owners can create items. \n
+  id (required): The id of the item to be deleted. \n \n \n
+
+  ERRORS IF: \n \n
+  - The item id passed in is invalid. (The item you are attempting to delete does not exist.) \n
+  - The authentication token passed in does not represent an owner. (you do not have permission to delete items). \n
+  "
+
   argument :id, !types.ID
   argument :token, !types.String
 

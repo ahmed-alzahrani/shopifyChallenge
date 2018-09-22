@@ -1,11 +1,27 @@
 class Resolvers::CreateUser < GraphQL::Function
+
+  description " A mutation that creates a new user in the SQLite database. \n
+
+  ARGUMENTS: \n \n
+  token (optional): An authentication-token representing the user making the request. Only owners can create other owners. \n
+  firstName (required): A string representing the new user\'s first name. \n
+  lastName (required): A string representing the new user\'s last name \n
+  email (required): A string representing the new user\'s email. \n
+  password (required): A string representing the new user\'s password. \n
+  owner (optional): A boolean flag that representing whether or not we want to create an owner (true), or regular customer (false). \n \n \n
+
+  ERRORS IF: \n \n
+  - Any of the arguments passed in are invalid (Invalid attributes error) \n
+  - The email passed in already belongs to an existing user. (a user already exists with that email). \n
+  "
+
   #arguments passed
-  argument :lastName, !types.String
+  argument :token, types.String, default_value: ""
   argument :firstName, !types.String
+  argument :lastName, !types.String
   argument :email, !types.String
   argument :password, !types.String
   argument :owner, types.Boolean, default_value: false
-  argument :token, types.String, default_value: ""
 
   type Types::UserType
 

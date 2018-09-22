@@ -1,6 +1,21 @@
 require 'date'
 class Resolvers::CreateOrder < GraphQL::Function
 
+  description " A mutation that creates a new order in the SQLite database. \n
+
+  ARGUMENTS: \n \n
+  token (reqired): An authentication-token representing the user making the request. Owners can place orders for themselves and regular customers, customers can only place orders for themselves. \n
+  userId (required): A unique id representing the user that this order will belong to. \n
+  storeId (required): A unique store id representing the store the order is being made from. \n
+  items (required): An array representing the unique ids of items being purchased. \n
+  coupon (optional): A string representing a coupon code the user can attempt to pass for a discount. \n \n \n
+
+  ERRORS IF: \n \n
+  - The token passed in does not belong to an owner or conflicts with the user id. (You must be logged in, or have the necessary rights to process an order for that user) \n
+  - The storeId passed in is invalid (You are attempting to process an empty order or an order for a store that does not exist.) \n
+  - None of the item ids passed in are valid (You are attempting to process an empty order or an order for a store that does not exist.) \n
+  "
+
   # arguments passed into the function
 
   # reqired args

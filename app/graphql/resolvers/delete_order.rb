@@ -1,5 +1,16 @@
 class Resolvers::DeleteOrder < GraphQL::Function
 
+  description " A mutation that deletes an order from the the SQLite database. \n
+
+  ARGUMENTS: \n \n
+  token (required): An authentication-token representing the user making the request. Only owners can delete orders. \n
+  id (required): The id of the order to be deleted. \n \n \n
+
+  ERRORS IF: \n \n
+  - The order id passed in is invalid. (The order you are attempting to delete does not exist.) \n
+  - The authentication token passed in does not represent an owner. (you do not have permission to delete orders). \n
+  "
+
   argument :token, !types.String
   argument :id, !types.ID
 
