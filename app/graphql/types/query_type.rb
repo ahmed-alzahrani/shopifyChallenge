@@ -1,6 +1,3 @@
-require 'search_object'
-require 'search_object/plugin/graphql'
-
 Types::QueryType = GraphQL::ObjectType.define do
   name 'Query'
 

@@ -7,10 +7,11 @@ end
 
 # my gems
 gem 'graphql', '1.8.8'
-gem 'search_object', '1.2.0'
-gem 'search_object_graphql', '0.1'
+# gem 'search_object', '1.2.0'
+# gem 'search_object_graphql', '0.1'
 gem 'devise'
 gem 'devise-token_authenticatable'
+gem 'graphql-docs', '~> 1.0'
 
 #gem graphql-docs  <--- swagger analogous ruby gem for easy documentation
 
