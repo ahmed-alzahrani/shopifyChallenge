@@ -2,16 +2,9 @@
 
 TODO:
 
-- Finalize all CRUD operations with proper input validation and error handling, todo:
-    - CRUD on Orders
-    - Verify updating store/owner
-    - verify updating user
-    - CRUD on Items
+- Unit Testing
 
-- Finish calculation on orders, including sales and coupon code
-
-- replace all camelCase naming with snake_case
-
+DOCUMENTATION:
 - Commenting code / ensure stylistic consistency
 
 - README
@@ -20,15 +13,13 @@ TODO:
 
 - Unit Testing
 
+AFTER SUBMISSION:
 - Kubernetes
 
+OTHER WORK:
 
-TODO (Application/Non project)
-
-- Resume Update (3rd Medium article if time permits)
+- Resume Update
 
 - Cover Letter
 
 - Build a store
-
-- Referral?
