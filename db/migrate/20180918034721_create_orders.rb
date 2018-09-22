@@ -4,6 +4,7 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.timestamp :created
       t.float :subTotal
       t.float :savings
+      t.float :adjusted
       t.float :tax
       t.float :total
       t.datetime :created

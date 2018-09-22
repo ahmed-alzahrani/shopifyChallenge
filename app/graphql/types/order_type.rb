@@ -3,6 +3,7 @@ Types::OrderType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :subTotal, !types.Float
+  field :adjusted, !types.Float
   field :savings, !types.Float
   field :tax, !types.Float
   field :total, !types.Float
