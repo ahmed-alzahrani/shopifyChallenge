@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 20180918233421) do
     t.string "email"
     t.string "phone"
     t.string "url"
+    t.integer "order_count", default: 0, null: false
+    t.float "total_sold", default: 0.0, null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

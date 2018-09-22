@@ -8,5 +8,6 @@ Types::StoreType = GraphQL::ObjectType.define do
   field :phone, !types.String
   field :url, !types.String
   field :user_id, !types.ID
-
+  field :order_count, !types.Int
+  field :total_sold, !types.Float
 end

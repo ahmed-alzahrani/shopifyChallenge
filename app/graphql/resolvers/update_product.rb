@@ -33,12 +33,22 @@ class Resolvers::UpdateProduct < GraphQL::Function
         if obj == {}
           GraphQL::ExecutionError.new("Improper query. Please specify at least one change you would like to make.")
         else
-          product.update!(
-            name: args[:name],
-            value: args[:value],
-            tags: args[:tags]
+          target.update!(
+            obj
           )
-          product
+          product_items = []
+          Item.where(product_id: target.id).find_each do |item|
+            product_items.push(item)
+          end
+
+          return OpenStruct.new(
+            id: target.id,
+            store_id: target.store_id,
+            name: target.name,
+            value: target.value,
+            tags: target.tags,
+            items: product_items
+          )
         end
       else
         GraphQL::ExecutionError.new("You do not have owner permission to update products.")

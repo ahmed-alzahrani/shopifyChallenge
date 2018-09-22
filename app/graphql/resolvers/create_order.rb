@@ -7,7 +7,6 @@ class Resolvers::CreateOrder < GraphQL::Function
   argument :token, !types.String
   argument :storeId, !types.ID
   argument :items, !types[types.ID]
-  argument :id, !types.ID
 
   argument :coupon, types.String
 
@@ -19,22 +18,26 @@ class Resolvers::CreateOrder < GraphQL::Function
     items = args[:items]
     order_items = []
     (0..(items.length - 1)).each do |i|
-      order_item = Item.find_by(id: items[i])
-      if order_item
+      if !(Item.where(id: items[i]).empty?)
+        order_item = Item.find_by(id: items[i])
         order_items << order_item
       else
+        puts "AHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+        puts "AHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+        puts "AHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+        puts "AHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
         # throw if there is an invalid item
         GraphQL::ExecutionError.new("You are attempting to order an invalid item, please review your order and submit again.")
       end
     end
 
     req = User.find_for_database_authentication(authentication_token: args[:token])
-    target = User.find_by(id: args[:id])
+    target = User.find_by(id: args[:userId])
     store = Store.find_by(id: args[:storeId])
 
     # check that the user initiating the request and the user assigned to the order exists
     if req && target && (req.id == target.id || (req.owner && !target.owner))
-      if store
+      if store && (order_items.length > 0)
         Order.create!(
           created: Date.today,
           subTotal: 0.00,
@@ -47,10 +50,18 @@ class Resolvers::CreateOrder < GraphQL::Function
 
         order = Order.order("id").last
 
-        (0..(items.length - 1)).each do |i|
-          item = Item.find(items[i])
-          order.items << item
+        (0..(order_items.length - 1)).each do |i|
+          order.items << order_items[i]
         end
+
+
+        # update the store to include the order
+        store.update(
+          order_count: (store.order_count += 1),
+          total_sold: (store.total_sold += order.total)
+        )
+
+        # return the OrderType to include the items for the client
         return OpenStruct.new(
           id: order.id,
           subTotal: order.subTotal,
@@ -62,7 +73,7 @@ class Resolvers::CreateOrder < GraphQL::Function
           items: order_items
         )
       else
-        GraphQL::ExecutionError.new("You are attempting to process an order for a store that does not exist.")
+        GraphQL::ExecutionError.new("You are attempting to process an empty order or an order for a store that does not exist.")
       end
     else
       GraphQL::ExecutionError.new("You must be logged in, or have the necessary rights to process an order for that user, please check your request and try again")

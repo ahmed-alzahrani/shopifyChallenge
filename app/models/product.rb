@@ -8,20 +8,52 @@ class Product < ApplicationRecord
   before_destroy :destroy_items
 
   def update_items
-    start = ((self.id - 1) * 3)
     one_year_value = ((self.value + 10.00) * 100).round / 100.0
     two_year_value = ((self.value + 20.00) * 100).round / 100.0
-    Item.where(product_id: self.id).find_each do |item|
-      # these are items who have the product id corresponding to the updated item
-      case item.id
-      when (start + 1)
-        item.update(name: (self.name + " (base)"), value: self.value)
-      when (start + 2)
-        item.update(name: (self.name + " (+1 year service)"), value: one_year_value)
-      when (start + 3)
-        item.update(name: (self.name + " (+2 year service)"), value: two_year_value)
-      else
-      end
+    items = Item.where(product_id: self.id)
+    if items.length > 0
+      # we use this counter to trim all legacy items except the first three
+      i = 0
+      items.each { |item|
+        if i > 2
+          # delete the item if it's beyond the third item for this product that has been changed
+          item.destroy
+        else
+          #update the item according to which iteration we're at
+          case i
+          when 0
+            item.update(name: (self.name + " (base)"), value: self.value)
+          when 1
+            item.update(name: (self.name + " (+1 year service)"), value: one_year_value)
+          when 2
+            item.update(name: (self.name + " (+2 year service)"), value: two_year_value)
+          end
+        end
+        i += 1
+      }
+    else
+      # this is a product creation, we have to create three new items for the product
+
+      #create our base item
+      Item.create!(
+        name: (self.name + " (base)"),
+        product_id: self.id,
+        value: self.value
+      )
+
+      #create our 1 year service version
+      Item.create!(
+        name: (self.name + " (+1 year service)"),
+        product_id: self.id,
+        value: one_year_value
+      )
+
+      #create our 2 year service version
+      Item.create!(
+        name: (self.name + " (+2 year service)"),
+        product_id: self.id,
+        value: two_year_value
+      )
     end
   end
 
