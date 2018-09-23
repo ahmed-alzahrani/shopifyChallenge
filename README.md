@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Problem/Requirements](#problem-requirements)
+- [Problem Requirements](#problem-requirements)
 - [Context](#context)
   - [The Store](#the-store)
   - [Technologies Used](#technologies-used)
