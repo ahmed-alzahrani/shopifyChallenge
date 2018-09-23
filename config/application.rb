@@ -16,5 +16,3 @@ module Shopify
     # -- all .rb files in that directory are automatically loaded.
   end
 end
-
-config.generators.test_framework :rspec
