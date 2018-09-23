@@ -1,17 +1,31 @@
-# README
+# Shopify Challenge 2019
 
-TODO:
+###Place 1
 
-- Unit Testing
+Hello, this is some text to fill in this, [here](#place-2), is a link to the second place.
 
-DOCUMENTATION:
-- Commenting code / ensure stylistic consistency
+###Place 2
 
-- ADD ANY ARGUMENTS MISSING OR IMPROPER TYPE TO ERRORS IF
+Place one has the fun times of linking here, but I can also link back [here](#place-1).
 
-- README
 
-- Documentation (graphql-docs gem)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - Unit Testing
 
