@@ -114,7 +114,7 @@ You should see the following default Rails landing page, as a signal that the se
 
 ![landing_page](assets/rails_landing_page.png)
 
-Now, you should be able to navigate to the only other route the server is listening on, and that is `http://localhost:3000/graphiql`. This will expose the GraphiQL interactive IDE, which serves as both a hub for more in-depth documentation for the different operations that can be performed on the DB, but actually let us run them in the browser, and see the result in real-time. More on this in the !!!!documentation section of the README.
+Now, you should be able to navigate to the only other route the server is listening on, and that is `http://localhost:3000/graphiql`. This will expose the GraphiQL interactive IDE, which serves as both a hub for more in-depth documentation for the different operations that can be performed on the DB, but actually let us run them in the browser, and see the result in real-time. More on this in the [documentation](#documentation) section of the README.
 
 ![Graphiql](assets/graphiql_image.png)
 
@@ -184,7 +184,7 @@ CRUD (Create, Read, Update, and Destroy) operations represent the different ways
 
 This particular API was built using GraphQL, which means that we can interact with our data via _Queries_ and _Mutations_. Both operations do what their name suggests, either query or mutate the data in some way.
 
-Below is a brief overview of the different queries and mutations that can be made to the API. To read about them in more detail, visit the !!!! documentation section of this README and follow the instructions on how to view the API in _Graphiql_.
+Below is a brief overview of the different queries and mutations that can be made to the API. To read about them in more detail, visit the [documentation](#documentation) section of this README and follow the instructions on how to view the API in _Graphiql_.
 
 ### Queries
 
@@ -270,7 +270,7 @@ A mutation that allows a user record to be deleted from the database. If a user 
 
 #### createOrder
 
-A mutation that takes in a store's id, a user's id, as well as a list of item ids, and creates an order for that user from that store with those items. Additionally, users can optionally passs in a coupon to try and earn savings, but this will be covered in the  !!!! _extended functionality_ section of the README.
+A mutation that takes in a store's id, a user's id, as well as a list of item ids, and creates an order for that user from that store with those items. Additionally, users can optionally passs in a coupon to try and earn savings, but this will be covered in the [extended functionality](#extended-functionality) section of the README.
 
 Note that creating an order also populates the order/item join table with records for each item in that order.
 

@@ -9,6 +9,7 @@ end
 gem 'graphql', '1.8.8'
 gem 'devise'
 gem 'devise-token_authenticatable'
+gem 'rspec', '~> 3.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
