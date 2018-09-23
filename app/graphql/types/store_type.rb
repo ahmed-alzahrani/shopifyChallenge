@@ -12,7 +12,7 @@ Types::StoreType = GraphQL::ObjectType.define do
   total_sold: Represents the total dollar amount sold by the store to date. \n
   "
 
-  #it has the following fields
+  # has the following fields
   field :id, !types.ID
   field :name, !types.String
   field :email, !types.String

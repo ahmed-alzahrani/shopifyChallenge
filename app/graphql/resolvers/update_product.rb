@@ -16,7 +16,6 @@ class Resolvers::UpdateProduct < GraphQL::Function
   - The authentication token passed in does not correspond to an owner. (You do not have permission to update products). \n
   "
 
-
   #required args
   argument :token, !types.String
   argument :id, !types.ID
@@ -26,16 +25,23 @@ class Resolvers::UpdateProduct < GraphQL::Function
   argument :value, types.Float
   argument :tags, types.String
 
+  # return type
   type Types::ProductType
 
-
   def call(_obj, args, _ctx)
+    # retrieve the records for the requesting user, and the product to be updated
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = Product.find_by(id: args[:id])
+
+    # verify the product exists
     if target
+      # verify the requesting user exists and has owner rights
       if req && req.owner
+
+        # instantiate our 'update hash' as empty
         obj = {}
 
+        # go through each optional argument, add it to the hash if it exists
         if args[:name]
           obj[:name] = args[:name]
         end
@@ -48,17 +54,23 @@ class Resolvers::UpdateProduct < GraphQL::Function
           obj[:tags] = args[:tags]
         end
 
+        # if the hash is empty, return the unchanged target product
         if obj == {}
           target
+
+        # else we update the product and return it
         else
           target.update!(
             obj
           )
+
+          # get all of the items pertaining to the product
           product_items = []
           Item.where(product_id: target.id).find_each do |item|
             product_items.push(item)
           end
 
+          # return the product and items
           return OpenStruct.new(
             id: target.id,
             store_id: target.store_id,
@@ -68,6 +80,7 @@ class Resolvers::UpdateProduct < GraphQL::Function
             items: product_items
           )
         end
+      # error if any of the prior checks failed
       else
         GraphQL::ExecutionError.new("You do not have owner permission to update products.")
       end

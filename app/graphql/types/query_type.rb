@@ -6,17 +6,17 @@ Types::QueryType = GraphQL::ObjectType.define do
   the orders, products, stores, and users that exist in SQLite DB. These latter
   queries all have optional parameters that allow users to filter their requests.'
 
-  # STORE QUERIES
+  # Store query
   field :stores do
 
     description 'A query that returns a sub-set of the exsiting
     stores based on which optional args are past in.
     If none are specified, all stores will be returned.'
 
+    # return type
     type !types[Types::StoreType]
 
-
-
+    # all args are optional
     argument :id, types.ID
     argument :name, types.String
     argument :email, types.String
@@ -26,6 +26,7 @@ Types::QueryType = GraphQL::ObjectType.define do
     argument :totalSold, types.Float
     argument :userId, types.ID
 
+    # return all stores if no optional args are present, or stores filtered by those args
     resolve -> (obj, args, ctx) {
       if args[:id]
         Store.where(id: args[:id])
@@ -49,7 +50,7 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
-  # USER QUERIES
+  # user query
   field :users do
 
     description 'A query that returns a sub-set of the exsiting
@@ -59,9 +60,13 @@ Types::QueryType = GraphQL::ObjectType.define do
     Querying the users requires presence of an auth-token as a required argument,
     and will error if the token does not belong to an owner.'
 
+    # return type
     type !types[Types::UserType]
 
+    # required arg
     argument :token, !types.String
+
+    # optional args
     argument :id, types.ID
     argument :firstName, types.String
     argument :lastName, types.String
@@ -71,8 +76,12 @@ Types::QueryType = GraphQL::ObjectType.define do
     argument :totalSpent, types.Float
 
     resolve -> (obj, args, ctx) {
+        # verify that the requesting user has owner privileges to query users
         user = User.find_for_database_authentication(authentication_token: args[:token])
         if user && user.owner
+
+          # return all users if no optional args are present, or users filtered by those args
+
           if args[:id]
             User.where(id: args[:id])
           elsif args[:firstName]
@@ -101,8 +110,10 @@ Types::QueryType = GraphQL::ObjectType.define do
 
     description 'A query that takes in an auth-token and returns the user that token corresponds to.'
 
-
+    # required argument
     argument :token, !types.String
+
+    # if a user exists with the passed in token, return that user, else error
     resolve -> (obj, args, ctx) {
       user = User.find_for_database_authentication(authentication_token: args[:token])
       if user
@@ -114,10 +125,8 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
-  # ORDER QUERIES
-
+  # order query
   field :orders do
-    type !types[Types::OrderType]
 
     description 'A query that returns a sub-set of the exsiting
     orders based on which optional args are past in.
@@ -126,15 +135,23 @@ Types::QueryType = GraphQL::ObjectType.define do
     Querying the orders requires presence of an auth-token as a required argument,
     and will error if the token does not belong to an owner.'
 
+    # return type
+    type !types[Types::OrderType]
+
+    # required arg
     argument :token, !types.String
+
+    # optional params
     argument :userId, types.ID
     argument :storeId, types.ID
     argument :lessThan, types.Float
     argument :moreThan, types.Float
 
+    # retrieve and verify that the requesting user exists and has owner rights
     resolve -> (obj, args, ctx) {
         user = User.find_for_database_authentication(authentication_token: args[:token])
         if user && user.owner
+          # return all orders if no optional args are present, or orders filtered by those args
           if args[:userId]
             Order.where(user_id: args[:userId])
           elsif args[:storeId]
@@ -152,7 +169,7 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
-  # PRODUCT QUERIES / (ALSO INCLUDES RELEVANT ITEMS)
+  # product query (also returns relevant items)
 
   field :products do
     type !types[Types::ProductType]
@@ -161,12 +178,14 @@ Types::QueryType = GraphQL::ObjectType.define do
     products based on which optional args are past in.
     If none are specified, all products will be returned.'
 
+    # optional args
     argument :id, types.ID
     argument :storeId, types.ID
     argument :name, types.String
     argument :tags, types.String
     argument :value, types.Float
 
+    # return all products if no optional args are present, or products filtered by those args
     resolve -> (obj, args, ctx) {
       if args[:id]
         Product.where(id: args[:id])

@@ -15,28 +15,37 @@ class Resolvers::CreateUser < GraphQL::Function
   - The email passed in already belongs to an existing user. (a user already exists with that email). \n
   "
 
-  #arguments passed
+  #arguments passed into the function
+
+  # required arguments
   argument :token, types.String, default_value: ""
   argument :firstName, !types.String
   argument :lastName, !types.String
   argument :email, !types.String
   argument :password, !types.String
+
+  # optional args
   argument :owner, types.Boolean, default_value: false
 
+  # return type
   type Types::UserType
 
   def call(_obj, args, _ctx)
+    # flag represents whether or not the requesting user is trying to create an owner(true) or a regular user (false)
     flag = false
+    # retrieve the user record that corresponds to the auth token passed in
     user = User.find_for_database_authentication(authentication_token: args[:token])
+    # verify user's existence
     if user
+      # flip the flag if the requesting user is an owner and the owner argument is true
       if (user.owner && args[:owner])
         flag = true
       end
     end
     begin
+      # check if a user already exists with the specified e-mail address, error if a user already exists.
       user = User.find_by(email: args[:email])
       if user
-        # the user exists by email, throw an error
         GraphQL::ExecutionError.new("a user already exists with that email")
       else
         # the user does NOT exist, we can create them

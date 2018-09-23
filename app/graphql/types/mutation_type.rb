@@ -28,4 +28,5 @@ Types::MutationType = GraphQL::ObjectType.define do
 
   # STORE MUTATIONS
   field :updateStore, function: Resolvers::UpdateStore.new
+  field :deleteStore, function: Resolvers::DeleteStore.new
 end

@@ -15,24 +15,36 @@ class Resolvers::UpdateItem < GraphQL::Function
   - The authentication token passed in does not correspond to an owner. (You do not have permission to update items). \n
   "
 
+  # arguments passed in
+
+  # required args
   argument :token, !types.String
   argument :id, !types.ID
   argument :productId, !types.ID
 
+  # optional args
   argument :name, types.String
   argument :value, types.Float
 
+  # return type
   type Types::ItemType
 
   def call(_obj, args, _ctx)
+    # retrieve the record pertaining to the requesting user, the item we want to update and its product
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = Item.find_by(id: args[:id])
     product = Product.find_by(id: args[:productId])
 
+    # verify that the product and target item exist
     if product && target
+
+      # verify that the requesting user exists and has ownership rights
       if req && req.owner
+
+        # if so instantiate our 'update hash' as empty
         obj = {}
 
+        # go through each optional argument, and if it has been passed in, add it to our update hash
         if args[:name]
           obj[:name] = args[:name]
         end
@@ -41,12 +53,14 @@ class Resolvers::UpdateItem < GraphQL::Function
           obj[:value] = args[:value]
         end
 
+        # if the update hash is empty, return the unchanged item
         if obj == {}
-          # GraphQL::ExecutionError.new("Improper query. Please specify at least one change you wish to make.")
           return target
         end
+        # else update the item and return it
         target.update!(obj)
         target
+      # error if any of the prior checks failed
       else
         GraphQL::ExecutionError.new("You do not have permission to update items.")
       end

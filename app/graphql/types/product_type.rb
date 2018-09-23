@@ -11,7 +11,7 @@ Types::ProductType = GraphQL::ObjectType.define do
   items: An array of items that represent different variations on the base product. \n
   "
 
-  #it has the follownig fields
+  #it has the following fields
   field :id, !types.ID
   field :store_id, !types.ID
   field :name, !types.String

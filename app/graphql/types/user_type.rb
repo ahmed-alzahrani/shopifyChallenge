@@ -11,6 +11,7 @@ Types::UserType = GraphQL::ObjectType.define do
   total_spent: Represents the total dollar amount spent by the user to date. \n
   "
 
+  # a user type has the following fields
   field :id, !types.ID
   field :last_name, !types.String
   field :first_name, !types.String

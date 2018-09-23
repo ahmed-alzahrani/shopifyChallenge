@@ -11,18 +11,27 @@ class Resolvers::SignInUser < GraphQL::Function
   - The password provided does not match the email provided. (Incorrect Email/Password). \n
   "
 
+  # arguments passed in
 
+  # required arguments
   argument :email, !types.String
   argument :password, !types.String
 
+  # return type
   type Types::AuthType
 
   def call(_obj, args, _ctx)
+    # retrieve the record of the user trying to sign in
     @user = User.find_for_database_authentication(email: args[:email])
+    # verify that the user exists
     if @user
+      # verify that the user's password is valid
       if @user.valid_password?(args[:password])
+
+        # return the authentication token of the user if sign in is successful
         authentication_token = @user.authentication_token
         return OpenStruct.new(authentication_token: authentication_token)
+      # else we error if one of the prior checks fail
       else
         GraphQL::ExecutionError.new('Incorrect Email/Password')
       end

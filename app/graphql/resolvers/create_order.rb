@@ -1,4 +1,5 @@
-require 'date'
+require 'date' # date allows us to create time stamps with order
+
 class Resolvers::CreateOrder < GraphQL::Function
 
   description " A mutation that creates a new order in the SQLite database. \n
@@ -24,9 +25,10 @@ class Resolvers::CreateOrder < GraphQL::Function
   argument :storeId, !types.ID
   argument :items, !types[types.ID]
 
-  # optional args
+  # optional arg
   argument :coupon, types.String
 
+  # return type
   type Types::OrderType
 
   def call(_obj, args, _ctx)
@@ -34,8 +36,11 @@ class Resolvers::CreateOrder < GraphQL::Function
     # ensure that all of our item ids map onto real items
     items = args[:items]
     order_items = []
+    # loop through the item ids array
     (0..(items.length - 1)).each do |i|
+      # if a corresponding item exists
       if !(Item.where(id: items[i]).empty?)
+        # add it to the array
         order_item = Item.find_by(id: items[i])
         order_items << order_item
       else
@@ -44,19 +49,23 @@ class Resolvers::CreateOrder < GraphQL::Function
       end
     end
 
+    # find the records pertaining to the requesting user, the user the order is for, and the store the order is from
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = User.find_by(id: args[:userId])
     store = Store.find_by(id: args[:storeId])
 
     # check that the user initiating the request and the user assigned to the order exists
     if req && target && (req.id == target.id || (req.owner && !target.owner))
+      # check that the store exists and that at least one item is being purchased
       if store && (order_items.length > 0)
 
         # now we calculate the spending on the order
+
+        # instantiate the subtotal and adjusted at 0
         subtotal = 0.00
         adjusted = 0.00
 
-        # for checking if the user has at least one item in each part of the stack
+        # for checking if the user has at least one item in each part of the stack, we initialize all flags to false
         mobile = false
         web = false
         frontend = false
@@ -64,7 +73,7 @@ class Resolvers::CreateOrder < GraphQL::Function
         devOps = false
         ide = false
 
-        # loop through the item
+        # loop through the items
         (0..(order_items.length - 1)).each do |i|
           # get the item and its product (so we can asses the tags)
           item = order_items[i]
@@ -72,7 +81,7 @@ class Resolvers::CreateOrder < GraphQL::Function
           # add the item value to our subtotal
           subtotal  = ((subtotal + item.value) * 100).round / 100.0
 
-          # CHECK THE TAGS, AND FLIP RELEVANT FLAG IF A CERTAIN TAG IS PRESENT
+          # check the tags of the product, and flip the relevant flag based on the tags
           if (product.tags.include? "mobile")
             mobile = true
           end
@@ -126,9 +135,11 @@ class Resolvers::CreateOrder < GraphQL::Function
           adjusted = ((adjusted * 0.9) * 100).round / 100.0
         end
 
+        # generate our tax, all orders taxed at 13%
         tax = ((adjusted * 0.13) * 100).round / 100.0
 
 
+        # create the order with the monetary values calculated and args we've verified
         Order.create!(
           created: Date.today,
           subTotal: subtotal,
@@ -140,20 +151,22 @@ class Resolvers::CreateOrder < GraphQL::Function
           user_id: args[:userId]
         )
 
+        # grab the order we just created
         order = Order.order("id").last
 
+        # populate our join table of orders and items with the relevant items from this order
         (0..(order_items.length - 1)).each do |i|
           order.items << order_items[i]
         end
 
 
-        # update the store to include the order
+        # update the store to include the order by adjusting order_count and total_sold
         store.update(
           order_count: (store.order_count += 1),
           total_sold: (((store.total_sold += order.total) * 100).round / 100.0)
         )
 
-        # update the user to include the order
+        # update the user to include the order by adjusting order_count and total_spent
         target.update(
           order_count: (target.order_count += 1),
           total_spent: (((target.total_spent += order.total) * 100).round / 100.0)

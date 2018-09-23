@@ -23,16 +23,20 @@ class Resolvers::DeleteUser < GraphQL::Function
   type Types::UserType
 
   def call(_obj, args, _ctx)
-    # first we try find both the requesting user, and the user they wish to delete
+    # retrieve the records pertaining to both the requesting user, and the user they wish to delete
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = User.find_by(id: args[:id])
+
+    # if the requesting user exists and the password passed is valid
     if req && req.valid_password?(args[:password])
-      # the token passed in is good, the user making the delete reques exists
+      # verify the target exists
       if target
-        # the user we WANT to delete exists
+        # verify that the requesting user exists, and that they are trying to delete themselves
+        # alternatively, an owner can delete another regular user
         if (req.id == target.id || (req.owner && !target.owner))
-          # the deletion can occur
+          # delete the user (also destroys their orders)
           target.destroy
+        # else we error if any of the prior checks failed
         else
           GraphQL::ExecutionError.new("You do not have the rights to delete that user.")
         end

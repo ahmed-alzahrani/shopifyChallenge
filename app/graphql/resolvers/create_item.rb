@@ -16,28 +16,37 @@ class Resolvers::CreateItem < GraphQL::Function
   - The value of an item is less than the value of its product (You can not create an item at less than the value of its product.) \n
   "
 
+  # required arguments
   argument :token, !types.String
   argument :storeId, !types.ID
   argument :productId, !types.ID
   argument :name, !types.String
   argument :value, !types.Float
 
+  # return type
   type Types::ItemType
 
   def call(_obj, args, _ctx)
+    # find the records pertaining to the requesting user, the targeted product, and store
     req = User.find_for_database_authentication(authentication_token: args[:token])
-    store = Store.find_by(id: args[:storeId])
     product = Product.find_by(id: args[:productId])
+    store = Store.find_by(id: args[:storeId])
 
+    # verify the requesting user exists and is an owner exists
     if req && req.owner
+      # verify the store exists
       if store
+        # verify that the product exists
         if product
+          # verify that the item's value is greater than or equal to it's base product's value
           if args[:value] >= product.value
+            # create the item if all checks pass
             Item.create!(
               product_id: args[:productId],
               name: args[:name],
               value: args[:value]
             )
+            # various errors resulting from any of the above checks failing
           else
             GraphQL::ExecutionError.new("You can not create an item at less than the value of its product.")
           end

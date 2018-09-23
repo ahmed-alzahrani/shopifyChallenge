@@ -1,15 +1,20 @@
 class Product < ApplicationRecord
+  # validates and ensures the following fields
   validates :name, presence: true
   validates :value, presence: true
   validates :tags, presence: true
-  has_many :items, dependent: :destroy
-  belongs_to :store
-  after_save :update_items
-  before_destroy :destroy_items
+  validates :store_id, presence: true
 
+  has_many :items, dependent: :destroy # has many items
+  belongs_to :store # a product is sold by (and belongs to) a store
+  after_save :update_items # update_items whenever a product is saved
+
+  # reset the item to their default configuration when the product is updated
   def update_items
+    # generate the one/two year values which are the product's base value + 10/20
     one_year_value = ((self.value + 10.00) * 100).round / 100.0
     two_year_value = ((self.value + 20.00) * 100).round / 100.0
+    # get all the items pertaining to the product
     items = Item.where(product_id: self.id)
     if items.length > 0
       # we use this counter to trim all legacy items except the first three
@@ -55,9 +60,5 @@ class Product < ApplicationRecord
         value: two_year_value
       )
     end
-  end
-
-  def destroy_items
-    self.items.destroy
   end
 end

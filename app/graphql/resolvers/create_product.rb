@@ -14,20 +14,29 @@ class Resolvers::CreateProduct < GraphQL::Function
   - The storeId passed in is invalid (You are attempting to create a product for a store that does not exist.) \n
   "
 
-  #arguments passed as #args
+  #arguments passed into the function
+
+  #required args
   argument :token, !types.String
   argument :storeId, !types.ID
   argument :name, !types.String
   argument :value, !types.Float
   argument :tags, !types.String
 
+  # return type
   type Types::ProductType
 
   def call(_obj, args, _ctx)
+    # verify existence of the records for the requesting user and the store the new product belongs to
     req = User.find_for_database_authentication(authentication_token: args[:token])
     store = Store.find_by(id: args[:storeId])
+
+    # verify that the requesting user exists (based on the auth token) and that the user is an owner
     if req && req.owner
+      # verify that the store the product being added to exsits
       if store
+
+        # create the product record
         product = Product.create!(
           name: args[:name],
           value: args[:value],
@@ -35,11 +44,13 @@ class Resolvers::CreateProduct < GraphQL::Function
           store_id: args[:storeId]
         )
 
+        # the product model will autmoatically generate default item variations for itself, we want to get them to return
         product_items = []
         Item.where(product_id: product.id).find_each do |item|
           product_items.push(item)
         end
 
+        # return ProductType for the client
         return OpenStruct.new(
           id: product.id,
           store_id: product.store_id,

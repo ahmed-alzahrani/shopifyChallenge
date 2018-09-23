@@ -13,7 +13,7 @@ Types::OrderType = GraphQL::ObjectType.define do
   user_id: The unique id of the store that purchased this particular order. \n
   items: An array of items that represent the items sold as part of this order. \n
   "
-
+  # an order has the following fields
   field :id, !types.ID
   field :subTotal, !types.Float
   field :adjusted, !types.Float

@@ -16,30 +16,36 @@ class Resolvers::UpdateUser < GraphQL::Function
   - The authentication token passed in does not correspond to any user (You must be logged in to update a user.) \n
   "
 
-
-  #arguments passed
+  # arguments passed
 
   # required parameters
   argument :id, !types.ID
   argument :token, !types.String
 
+  # optional arguments
   argument :first_name, types.String
   argument :last_name, types.String
   argument :email, types.String
   argument :owner, types.Boolean, default_value: false
 
+  # return type
   type Types::UserType
 
   def call(_obj, args, _ctx)
+    # retrieve the record for the requesting user and user to be updated
     req = User.find_for_database_authentication(authentication_token: args[:token])
     target = User.find_by(id: args[:id])
+
+    # verify the existence of both users
     if req && target
+      # verify that the requsting user and target are the same, or that an owner is trying to update a regular user
       if (req.id == target.id || (req.owner && !target.owner))
         #the update can occur
 
-        # build our update object based on which optional params were passed in
+        # instantiate our 'update hash' as empty
         obj = {}
 
+        # loop through the optional args and add them to the update hash if they exist
         if req.owner && args[:owner]
           obj[:owner] = true
         else
@@ -58,9 +64,10 @@ class Resolvers::UpdateUser < GraphQL::Function
           obj[:email] = args[:email]
         end
 
-        #update
+        # update and return the user
         target.update!(obj)
         target
+      # error if any of the prior checks failed
       else
         GraphQL::ExecutionError.new("You do not have the rights to update that user.")
       end
