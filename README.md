@@ -2,7 +2,7 @@
 
 ###Place 1
 
-Hello, this is some text to fill in this, [here](#place-2), is a link to the second place.
+Hello, this is some text to fill in this, [here](#Place-2), is a link to the second place.
 
 
 What is Lorem Ipsum?
@@ -55,7 +55,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 
 ###Place 2
 
-Place one has the fun times of linking here, but I can also link back [here](#place-1).
+Place one has the fun times of linking here, but I can also link back [here](#Place-1).
 
 
 
