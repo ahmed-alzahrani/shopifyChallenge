@@ -1,10 +1,8 @@
 # Shopify Challenge 2019
 
-[here](#hello-world).
-
 ## Table of Contents
 
-- [Problem/Requirements](#problem/requirements)
+- [Problem/Requirements](#problem-requirements)
 - [Context](#context)
   - [The Store](#the-store)
   - [Technologies Used](#technologies-used)
@@ -19,11 +17,11 @@
   - [An Owner Can](#an-owner-can)
   - [A Regular User Can](#a-regular-user-can)
   - [Anybody Can](#anybody-can)
-- [Documentation (that doesn't suck)](#documentation-(that-doesn't-suck))
-- [Unit Tests](#unit-tests)
+- [Documentation](#documentation)
+- [Unit Testing](#unit-testing)
 - [Kubernetes](#kubernetes)
 
-## Problem / Requirements
+## Problem Requirements
 
 __Question 1__: Please design a server-side web API that models the following simple relationship:
 
@@ -91,6 +89,8 @@ Lastly, its important when applying for work to know your audience. Shopify is o
 
 What I've discovered is that once you begin using GraphQL, it feels so natural. Long gone are the days of under or over-querying, and then installing some middleware or back-end logic to parse the data and hone in on what the client or end-user desires. With GraphQL, you can simply describe the data you wish to receive, receive it. It's incredibly easy, and satisfying.
 
+[back to top](#table-of-contents)
+
 ## Getting Started
 
 Before you've cloned this repo, you need to ensure that you have the Ruby programming language, as well as Rails and SQLite installed on your machine. Thankfully, [RailsInstaller](http://railsinstaller.org/en) is the quickest way to go from zero to developing Ruby on Rails applications. Regardless of the OS you are working on, follow the instructions at that web-page and you will be ready to work with this API in no time.
@@ -117,6 +117,8 @@ You should see the following default Rails landing page, as a signal that the se
 Now, you should be able to navigate to the only other route the server is listening on, and that is `http://localhost:3000/graphiql`. This will expose the GraphiQL interactive IDE, which serves as both a hub for more in-depth documentation for the different operations that can be performed on the DB, but actually let us run them in the browser, and see the result in real-time. More on this in the !!!!documentation section of the README.
 
 [Graphiql](assets/graphiql_image.png)
+
+[back to top](#table-of-contents)
 
 ## My API
 
@@ -172,6 +174,8 @@ If you wish to deviate in order to specify what a seed is for, you can keep adhe
 The seed data is set up such that there exists only the one store, with two default users; Peter, the owner of Peter's Programming Paradise, and an example customer. This is so that out-of-the-box we can test how the different user roles interact with the API.
 
 As far as products, there exist 10 products in each of the 6 aforementioned categories, each with their own 3 item variations, following the style specified in this document. In order to see specifically what is being seeded, please visit the `b_seed.rb` [here](db/seeds/b_seed.rb)
+
+[back to top](#table-of-contents)
 
 
 ## Full CRUD Operations
@@ -287,6 +291,8 @@ A mutation that allows a store to be deleted from the databae. Please note this 
 
 The two missing CRUD operations are _updateOrder_ and _createStore_. The reasons for these are simple. Although the logic for this API would easily be expandable to allow for multiple stores, I wanted to keep the scope of this example within the one store. As far as _updateOrder_ is concerned, it struck me that in most cases, once you have made an online order, updating that would be requesting a refund, in which case this is covered by deletion. However, you could potentially allow for users to modify orders within a certain time frame in case of sales, new coupons or other such promotions.
 
+[back to top](#table-of-contents)
+
 
 ## Extended Functionality
 
@@ -308,6 +314,8 @@ You will receive 10% off of your purchase, AND all text editors / IDEs in your o
 What's more, is that these two offers are eligible to stack, meaning customers can receive a maximum of 20% off, and free text editors / IDEs on their order.
 
 Additionally, stores and customers both track their order numbers and order totals. Through previous experience working at a small e-commerce business, I know first-hand how much loyal customers matter, as well as how business will often consider a customer's purchase history when making customer service decisions. Through tracking this, the door is left open for the API to be improved upon, by offering special deals to customers who spend over a certain threshold.
+
+[back to top](#table-of-contents)
 
 ## Security
 
@@ -402,7 +410,9 @@ My intention for this example API was for ALL mutations and queries to be testab
 
 An important distinction between this example and a usual implementation of token authentication I wanted to point out.
 
-## Documentation (that doesn't suck)
+[back to top](#table-of-contents)
+
+## Documentation
 
 Much like security, documentation (that doesn't suck) has been achieved via three methods:
 
@@ -424,10 +434,14 @@ __view specific types and learn more about them and their fields__
 __view specific mutations or queries to learn about their arguments, return types and behaviours__
 ![graphiql_mutation](assets/graphiql_mutations.png)
 
+[back to top](#table-of-contents)
+
 
 ## Unit Testing
 
 RSPEC
+
+[back to top](#table-of-contents)
 
 
 ## Kubernetes
@@ -438,18 +452,4 @@ Deploying the API to a Kubernetes environment was originally the challenge I was
 
 __However__, I will be attempting this step during the week to come, beyond the 24th when my application has been submitted, so please feel free to check back and view my progress! I will update this section with anything note-worthy.
 
-
-
-
-
-
-
-
-
-## Hello World
-
-Hello, this is some text to fill in this, [here](#Place-2), is a link to the second place.
-
-## Place 2
-
-Place one has the fun times of linking here, but I can also link back [here](#hello-world).
+[back to top](#table-of-contents)
