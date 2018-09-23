@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatables, :token_authenticatable
 
   has_many :orders, dependent: :destroy
+  has_many :stores, dependent: :destroy
+
 end
