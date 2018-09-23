@@ -95,7 +95,7 @@ You should see the following default Rails landing page, as a signal that the se
 
 The way in which I decided to model the relations specified in the problem outline can be viewed in this SQL relation diagram.
 
-![sql diagram](assets/SQLite_High_Levle.png)
+![sql diagram](assets/SQLite_High_Level.png)
 
 Apart from showing you what some of the fields that different types have, the relationships shown in the diagram can also be explained as:
 
