@@ -1,6 +1,6 @@
 # Shopify Challenge 2019
 
-##Place 1
+## Place 1
 
 Hello, this is some text to fill in this, [here](#Place-2), is a link to the second place.
 
@@ -53,7 +53,7 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 
 The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by Engli
 
-##Place 2
+## Place 2
 
 Place one has the fun times of linking here, but I can also link back [here](#Place-1).
 
