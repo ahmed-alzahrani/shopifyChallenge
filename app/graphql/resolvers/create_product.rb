@@ -10,6 +10,7 @@ class Resolvers::CreateProduct < GraphQL::Function
   tags (required): A string representing the various sub-categories that products can be searched by. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The token passed in does not belong to an owner. (You do not have owner rights to create new products) \n
   - The storeId passed in is invalid (You are attempting to create a product for a store that does not exist.) \n
   "

@@ -12,6 +12,7 @@ class Resolvers::CreateOrder < GraphQL::Function
   coupon (optional): A string representing a coupon code the user can attempt to pass for a discount. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The token passed in does not belong to an owner or conflicts with the user id. (You must be logged in, or have the necessary rights to process an order for that user) \n
   - The storeId passed in is invalid (You are attempting to process an empty order or an order for a store that does not exist.) \n
   - None of the item ids passed in are valid (You are attempting to process an empty order or an order for a store that does not exist.) \n

@@ -7,6 +7,7 @@ class Resolvers::DeleteStore < GraphQL::Function
   id (requred): The unique id of the store to be deleted. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The store id passed in is invalid (The store you are attempting to delete does not exist).
   - The authentication token passed in does not represent the owner of the store.
   "

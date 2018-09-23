@@ -11,6 +11,7 @@ class Resolvers::UpdateItem < GraphQL::Function
   value (optional): The new value of the updated item if being changed. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The item id passed in is invalid. (You are attempting to update an item that does not exist.) \n
   - The authentication token passed in does not correspond to an owner. (You do not have permission to update items). \n
   "

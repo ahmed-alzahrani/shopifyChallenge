@@ -7,6 +7,7 @@ class Resolvers::DeleteItem < GraphQL::Function
   id (required): The id of the item to be deleted. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The item id passed in is invalid. (The item you are attempting to delete does not exist.) \n
   - The authentication token passed in does not represent an owner. (you do not have permission to delete items). \n
   "

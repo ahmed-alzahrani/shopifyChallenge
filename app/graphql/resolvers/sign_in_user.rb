@@ -7,6 +7,7 @@ class Resolvers::SignInUser < GraphQL::Function
   password (required): The password of the user attempting to sign in. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The email does not belong to an existing user. (No such user exists in the DB). \n
   - The password provided does not match the email provided. (Incorrect Email/Password). \n
   "

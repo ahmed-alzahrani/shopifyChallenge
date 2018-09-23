@@ -10,6 +10,7 @@ class Resolvers::CreateItem < GraphQL::Function
   value (required): A float representing the new item\'s price. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The token passed in does not belong to an owner (You do not have owner rights to create new items) \n
   - The storeId passed in is invalid (You are attempting to add an item to a store that does not exist.) \n
   - The productId passed in is invalid (You are attempting to add an item to a product that does not exist.) \n

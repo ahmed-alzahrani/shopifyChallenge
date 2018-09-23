@@ -12,6 +12,7 @@ class Resolvers::UpdateProduct < GraphQL::Function
   tags (optional): The new tags of the updated item if being changed. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The product id passed in is invalid. (You are attempting to update a product that does not exist.) \n
   - The authentication token passed in does not correspond to an owner. (You do not have permission to update products). \n
   "

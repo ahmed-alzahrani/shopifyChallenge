@@ -8,6 +8,7 @@ class Resolvers::DeleteUser < GraphQL::Function
   password (required): The password of the user initiating the deletion. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The authentication token or password passed in is invalid (The token or password passed in is invalid. You must be signed-in to delete a user). \n
   - The id passed in is invalid (The user you want to delete does not exist.)\n
   - The user id and token do not match, or they both belong to different owners (You do not have the rights to delete that user). \n

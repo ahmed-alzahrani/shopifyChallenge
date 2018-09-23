@@ -13,6 +13,7 @@ class Resolvers::UpdateStore < GraphQL::Function
   owner_id (optional): The new owner id of the updated store if being changed. \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The store id passed in is invalid. (You are attempting to update a store that does not exist.) \n
   - The authentication token passed in does not correspond to an owner. (You do not have permission to update this store). \n
   "

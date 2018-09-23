@@ -11,6 +11,7 @@ class Resolvers::CreateUser < GraphQL::Function
   owner (optional): A boolean flag that representing whether or not we want to create an owner (true), or regular customer (false). \n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - Any of the arguments passed in are invalid (Invalid attributes error) \n
   - The email passed in already belongs to an existing user. (a user already exists with that email). \n
   "

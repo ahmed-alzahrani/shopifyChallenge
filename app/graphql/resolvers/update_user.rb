@@ -12,6 +12,7 @@ class Resolvers::UpdateUser < GraphQL::Function
   owner (optional): A flag that is passed true if we are upgrading a user to an owner.\n \n \n
 
   ERRORS IF: \n \n
+  - Any required arguments are missing, or any argument is passed as an invalid type. \n
   - The token and user id are not a match / an owner is trying to update another owner. (You do not have the rights to update that user.) \n
   - The authentication token passed in does not correspond to any user (You must be logged in to update a user.) \n
   "
