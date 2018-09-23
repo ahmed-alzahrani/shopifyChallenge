@@ -116,7 +116,7 @@ You should see the following default Rails landing page, as a signal that the se
 
 Now, you should be able to navigate to the only other route the server is listening on, and that is `http://localhost:3000/graphiql`. This will expose the GraphiQL interactive IDE, which serves as both a hub for more in-depth documentation for the different operations that can be performed on the DB, but actually let us run them in the browser, and see the result in real-time. More on this in the !!!!documentation section of the README.
 
-[Graphiql](assets/graphiql_image.png)
+![Graphiql](assets/graphiql_image.png)
 
 [back to top](#table-of-contents)
 
@@ -349,7 +349,7 @@ There are three main ways that I have secured the API that I have created:
 
 3. __User Roles__.
 
-[devise](assets/devise.png)
+![devise](assets/devise.png)
 
 Using the devise gem, I made it so that my User model is token_authenticatable. Currently, tokens are set to expire every day, however this and other token settings can be changed in a config file [here](config/locales/token_authenticable.rb)
 
