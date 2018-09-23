@@ -1,5 +1,3 @@
-require 'date' # date allows us to create time stamps with order
-
 class Resolvers::CreateOrder < GraphQL::Function
 
   description " A mutation that creates a new order in the SQLite database. \n
@@ -142,7 +140,6 @@ class Resolvers::CreateOrder < GraphQL::Function
 
         # create the order with the monetary values calculated and args we've verified
         Order.create!(
-          created: Date.today,
           subTotal: subtotal,
           adjusted: adjusted,
           savings: (((subtotal - adjusted) * 100).round / 100.0),
