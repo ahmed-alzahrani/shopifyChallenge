@@ -7,7 +7,6 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.float :adjusted
       t.float :tax
       t.float :total
-      t.datetime :created
 
       t.references :store, foreign_key: true
       t.references :user, foreign_key: true
