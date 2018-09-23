@@ -1,6 +1,6 @@
 # Shopify Challenge 2019
 
-## Place 1
+## Hello World
 
 Hello, this is some text to fill in this, [here](#Place-2), is a link to the second place.
 
@@ -55,7 +55,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 
 ## Place 2
 
-Place one has the fun times of linking here, but I can also link back [here](#Place-1).
+Place one has the fun times of linking here, but I can also link back [here](#hello-world).
 
 
 
