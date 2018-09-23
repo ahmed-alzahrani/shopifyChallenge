@@ -40,7 +40,7 @@ As horrible as this reality may seem to those of us with a passion for programmi
 
 _Peter's Programming Paradise_
 
-[image logo](assets/LogoMakr_1Lvyuu.png)
+![image logo](assets/LogoMakr_1Lvyuu.png)
 
 
 
