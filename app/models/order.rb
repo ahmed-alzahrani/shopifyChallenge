@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
 
   # validate and ensure the following fields
-  validates :created, presence: true
   validates :subTotal, presence: true
   validates :savings, presence: true
   validates :adjusted, presence: true
