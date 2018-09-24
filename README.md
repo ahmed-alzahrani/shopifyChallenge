@@ -446,11 +446,7 @@ gem 'rspec-rails', '~> 3.8'
 gem 'rspec-graphql_matchers'
 ```
 
-Simply migrate the db in the test environment with the following command:
-
-`rake db:migrate RAILS_ENV=test`
-
-Do not seed the DB in this environment before launching the tests, as the necessary records are created automatically. Simply run:
+Do not seed the DB in the test environment before launching the tests, as the necessary records are created automatically. Simply run:
 
 `rspec` or `rspec/path/to/specific/file` to run a singular file of tests.
 

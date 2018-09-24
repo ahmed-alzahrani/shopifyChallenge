@@ -54,4 +54,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'simplecov', require: false, group: :test
 gem 'graphiql-rails', '1.4.4', group: :development
