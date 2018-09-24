@@ -439,7 +439,22 @@ __view specific mutations or queries to learn about their arguments, return type
 
 ## Unit Testing
 
-RSPEC
+In total, I have installed 143 unit tests using the following gems:
+
+```
+gem 'rspec-rails', '~> 3.8'
+gem 'rspec-graphql_matchers'
+```
+
+Simply migrate the db in the test environment with the following command:
+
+`rake db:migrate RAILS_ENV=test`
+
+Do not seed the DB in this environment before launching the tests, as the necessary records are created automatically. Simply run:
+
+`rspec` or `rspec/path/to/specific/file` to run a singular file of tests.
+
+The unit tests in this project validate the various models, types, and even the queries and mutations.
 
 [back to top](#table-of-contents)
 

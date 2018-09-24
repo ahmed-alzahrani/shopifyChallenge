@@ -24,7 +24,7 @@ class Resolvers::DeleteProduct < GraphQL::Function
   def call(_obj, args, _ctx)
     # retrieve the records corresponding to the requesting user and the product to be deleted
     req = User.find_for_database_authentication(authentication_token: args[:token])
-    product = Product.find(args[:id])
+    product = Product.find_by(id: args[:id])
 
     # verify the product exists
     if product

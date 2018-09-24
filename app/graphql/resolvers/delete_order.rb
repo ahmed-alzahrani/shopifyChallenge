@@ -22,12 +22,12 @@ class Resolvers::DeleteOrder < GraphQL::Function
   def call(_obj, args, _ctx)
     # retrieve the records corresponding to the requesting user, the order being deleted, as well as the customer and store that correspond to the order
     req = User.find_for_database_authentication(authentication_token: args[:token])
-    order = Order.find_by(args[:id])
-    customer = User.find_by(id: order.user_id)
-    store = Store.find_by(id: order.store_id)
+    order = Order.find_by(id: args[:id])
 
     # verify existence of the orders
     if order
+      customer = User.find_by(id: order.user_id)
+      store = Store.find_by(id: order.store_id)
       # verify that the requesting user exists and has owner rights
       if req && req.owner
         # update the customer and store to remove the order and delete the order

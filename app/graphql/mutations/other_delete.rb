@@ -15,8 +15,6 @@ OtherDelete = GraphQL::ObjectType.define do
       # if the item exists
       #if Item.exists?(args[:id])
       if item
-        puts "IT EXIIIIISTS"
-        puts item.id
         # and the requesting user both exists and is an owner
         if req && req.owner
           # destory the item
