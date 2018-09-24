@@ -81,11 +81,11 @@ In this case, since software typically doesn't come in different sizes and colou
 
 #### Technologies Used
 
-For the purposes of this API, I decided to use Ruby on Rails, with the built-in SQLite database. I also used the ruby gem _graphiql_ to offer interactive documentation, but more on that later.
+For the purposes of this API, I decided to use Ruby on Rails, with the built-in SQLite database. I also used the ruby gem `graphiql-rails` to offer interactive documentation, `devise` to add use roles, and `rspec-rails` for unit tests.
 
 The reason behind choosing Ruby on Rails was simple. As someone who is very comfortable with writing servers using Node.js, the switch to Rails was quite seamless. Ruby is a language that was designed to be read human-first, machine-second, and as such doesn't boast some of the same idiosyncrasies that javascript has. And, as a framework, using Rails and the bundler to manage gem dependencies feels very similar to using npm. Rails keen focus on DRY, convention over implementation, and straight-forward usage of MVC architecture made it a delight to work with as someone with some prior exposure to Ruby via course-work.
 
-Lastly, its important when applying for work to know your audience. Shopify is one of the largest applications in the world built on Rails, and have been a trailblazer as a company in showing the world the power of GraphQL as opposed to the classic REST Api implementation.
+Lastly, its important when applying for work to know your audience. Shopify is one of the largest applications in the world built on Rails, and have been a trailblazer as a company in showing the world the power of GraphQL as opposed to the classic REST Api implementation. It only made sense to me to use a technology I would be on the job, as well as show my ability and comfort with picking up and using new technologies.
 
 What I've discovered is that once you begin using GraphQL, it feels so natural. Long gone are the days of under or over-querying, and then installing some middleware or back-end logic to parse the data and hone in on what the client or end-user desires. With GraphQL, you can simply describe the data you wish to receive, receive it. It's incredibly easy, and satisfying.
 
