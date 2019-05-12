@@ -19,7 +19,6 @@
   - [Anybody Can](#anybody-can)
 - [Documentation](#documentation)
 - [Unit Testing](#unit-testing)
-- [Kubernetes](#kubernetes)
 
 ## Problem Requirements
 
@@ -457,14 +456,5 @@ Do not seed the DB in the test environment before launching the tests, as the ne
 The unit tests in this project validate the various models, types, and even the queries and mutations.
 
 [back to top](#table-of-contents)
-
-
-## Kubernetes
-
-![Kubernetes](assets/kubernetes.png)
-
-Deploying the API to a Kubernetes environment was originally the challenge I was going to tackle on the weekend preceding the closing of the application (22nd, 23rd of September). However, unfortunately, I, like many others in the Barrhaven (Ottawa) area have been affected by the blackout and have been without power since Friday afternoon. This has unfortunately been a great set-back and cost me key time this weekend with which I hoped to tackle this extra, extra credit assignment.
-
-__However__, I will be attempting this step during the week to come, beyond the 24th when my application has been submitted, so please feel free to check back and view my progress! I will update this section with anything note-worthy.
 
 [back to top](#table-of-contents)
